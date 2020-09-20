@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <title>Color Guessing Game</title>
+    <meta charset="utf-8">
+    <body>
+        <h1>Color Guessing Game</h1>
+        <button onclick="runGame()">Start Game</button>
+        <script>
+        const COLORS_ARRAY = ['magenta', 'gold', 'cyan', 'gray', 'green', 'blue', 'white', 'red', 'orange', 'yellow'];
+        COLORS_ARRAY.sort()
+            
+        function runGame() { 
+            let guess = "";
+            let correct = false;
+            let numTries = 0;
+            
+            const targetIndex = Math.floor(Math.random() * 9);
+            const target = COLORS_ARRAY[targetIndex];
+
+
+            do {
+                guess = prompt("Guess the color from the array: " + COLORS_ARRAY.join(", ") + "\nWhat color am I thinking of?");
+                numTries += 1;
+                if(guess === null) {
+                    alert("The game has ended");
+                    return;
+                }
+                correct = checkGuess(guess, target);
+                
+            } while (correct === false);
+
+            document.body.style.background = guess;
+            alert("Congratulations you have guessed the color!\n\nIt took you " + numTries + " tries");
+        }
+
+        function checkGuess(guess, target) {
+            const sorryMsg = "Sorry, your guess is incorrect.";
+            const tryMsg = "n\Please try again.";
+            
+            let correct = false; 
+            if (COLORS_ARRAY.includes(guess) === false) {
+                alert("Sorry, I don't recognize your color.");
+            } else if (guess < target) {
+                alert(sorryMsg + "Hint: your color is alphabetically lower than mine." + tryMsg);
+            } else if (guess > target) {
+                alert(sorryMsg + "Hint: your color is alphabetically higher than mine." + tryMsg);
+            } else {
+                correct = true;
+            }
+            return correct;
+        }
+        </script>
+    </body>
+</html>
